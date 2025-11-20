@@ -1,0 +1,57 @@
+matrix world;
+matrix view;
+matrix projection;
+
+
+struct VertexInput
+{
+    float4 position : POSITION;
+    float4 color : COLOR;
+};
+
+struct VertexOutput
+{
+    float4 position : SV_POSITION; //SV : System Value
+    float4 color : COLOR;
+};
+
+VertexOutput VS(VertexInput input)
+{
+    VertexOutput output;
+    output.position = mul(input.position, world);
+    output.position = mul(output.position, view);
+    output.position = mul(output.position, projection);
+    
+    
+    output.color = input.color;
+    
+    
+    return output;
+}
+
+float4 PS(VertexOutput input) : SV_TARGET
+{
+    return input.color;
+}
+
+RasterizerState FillModeWireframe
+{
+    FillMode = Wireframe;
+    CullMode = None;
+};
+
+
+technique11 T0
+{
+    pass P0
+    {
+        SetVertexShader( CompileShader( vs_5_0, VS() ) );
+        SetPixelShader( CompileShader( ps_5_0, PS() ) );
+    }
+    pass P1
+    {
+        SetRasterizerState(FillModeWireframe);
+        SetVertexShader( CompileShader( vs_5_0, VS() ) );
+        SetPixelShader( CompileShader( ps_5_0, PS() ) );
+    }
+}
