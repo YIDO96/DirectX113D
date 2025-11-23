@@ -12,7 +12,10 @@ void TextureDemo::Init()
 	_shader = make_shared<Shader>(L"04.Texture.fx");
 	
 	_geometry = make_shared<Geometry<VertexTextureData>>();
-	GeometryHelper::CreateQuad(_geometry);
+	//GeometryHelper::CreateQuad(_geometry);
+	//GeometryHelper::CreateCube(_geometry);
+	//GeometryHelper::CreateSphere(_geometry);
+	GeometryHelper::CreateGrid(_geometry, 256, 256);
 
 
 	_vertexBuffer = make_shared<VertexBuffer>();
@@ -40,9 +43,9 @@ void TextureDemo::Update()
 void TextureDemo::Render()
 {
 	// 
-	_shader->GetMatrix("world")->SetMatrix((float*)&_world);
-	_shader->GetMatrix("view")->SetMatrix((float*)&Camera::S_MatView);
-	_shader->GetMatrix("projection")->SetMatrix((float*)&Camera::S_MatProjection);
+	_shader->GetMatrix("World")->SetMatrix((float*)&_world);
+	_shader->GetMatrix("View")->SetMatrix((float*)&Camera::S_MatView);
+	_shader->GetMatrix("Projection")->SetMatrix((float*)&Camera::S_MatProjection);
 	_shader->GetSRV("Texture0")->SetResource(_texture->GetComPtr().Get());
 
 
