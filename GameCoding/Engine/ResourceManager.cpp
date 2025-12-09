@@ -3,10 +3,30 @@
 #include "Texture.h"
 #include "Shader.h"
 #include "Mesh.h"
+#include <filesystem>
 
 void ResourceManager::Init()
 {
 	CreateDefaultMesh();
+}
+
+shared_ptr<Texture> ResourceManager::GetOrAddTexture(const wstring& key, const wstring path)
+{ // key, path값을 통해서 파일이 있는지 없는지 체크하고, 없으면 리턴,  아니면 텍스처 로드한 다음 add해서 키값을 넣어주는
+	shared_ptr<Texture> texture = Get<Texture>(key);
+
+	if (filesystem::exists(filesystem::path(path)) == false)
+		return nullptr;
+
+	texture = Load<Texture>(key, path);
+
+	if (texture == nullptr)
+	{
+		texture = make_shared<Texture>();
+		texture->Load(path);
+		Add(key, texture);
+	}
+
+	return texture;
 }
 
 void ResourceManager::CreateDefaultMesh()

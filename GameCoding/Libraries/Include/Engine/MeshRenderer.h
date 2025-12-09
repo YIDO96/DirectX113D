@@ -13,21 +13,24 @@ public:
 	MeshRenderer();
 	virtual ~MeshRenderer();
 
-	virtual void Update() override;
+	//virtual void Update() override;
 
 	void SetMesh(shared_ptr<Mesh> mesh) { _mesh = mesh; }
 	void SetMaterial(shared_ptr<Material> material) { _material = material; }
+	void SetPass(uint8 pass) { _pass = pass; }
+
+	void RenderInstancing(shared_ptr<class InstancingBuffer>& buffer);
+	InstanceID GetInstanceID();
 
 	// Legacy
-	void SetTexture(shared_ptr<Texture> texture) { /*_texture = texture;*/ }
-	void SetShader(shared_ptr<Shader> shader) { /*_shader = shader; */
-	}
+	//void SetTexture(shared_ptr<Texture> texture) { /*_texture = texture;*/ }
+	//void SetShader(shared_ptr<Shader> shader) { /*_shader = shader; */}
+
 
 
 private:
 	shared_ptr<Mesh> _mesh;
 	shared_ptr<Material> _material;
-	//shared_ptr<Texture> _texture;
-	//shared_ptr<Shader> _shader;
+	uint8 _pass = 0;
 };
 

@@ -57,6 +57,16 @@ struct VertexTetrueNormalTangent
     float3 tangent : TANGENT;
 };
 
+struct VertexTetrueNormalTangentBlend
+{
+    float4 position : POSITION;
+    float2 uv : TEXCOORD;
+    float3 normal : NOERMAL;
+    float3 tangent : TANGENT;
+    float4 blendIndices : BLENDINDICES;
+    float4 blendWeights : BLENDWEIGHT;
+};
+
 
 //////////////////
 // VertexOutput //
@@ -107,6 +117,10 @@ RasterizerState FillModeWireFrame
     FillMode = Wireframe;
 };
 
+RasterizerState FrontCounterClockwiseTrue
+{
+    FrontCounterClockwise = true;
+};
 
 ///////////
 // Macro //
@@ -119,6 +133,13 @@ pass name                                                   \
         SetPixelShader( CompileShader( ps_5_0, ps() ) );    \
     }
 
+#define PASS_RS_VP(name, rs, vs, ps)                        \
+pass name                                                   \
+{                                                           \
+    SetRasterizerState(rs);                                 \
+    SetVertexShader(CompileShader(vs_5_0, vs()));           \
+    SetPixelShader(CompileShader(ps_5_0, ps()));            \
+}
 
 //////////////
 // Function //

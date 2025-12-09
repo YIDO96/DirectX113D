@@ -4,8 +4,11 @@
 #include "Transform.h"
 #include "Camera.h"
 #include "MeshRenderer.h"
-//#include "Animator.h"
-
+#include "ModelRenderer.h"
+#include "ModelAnimator.h"
+#include "Light.h"
+#include "BaseCollider.h"
+#include "Terrain.h"
 
 
 GameObject::GameObject()
@@ -115,12 +118,40 @@ shared_ptr<MeshRenderer> GameObject::GetMeshRenderer()
 	return static_pointer_cast<MeshRenderer>(component);
 }
 
-//shared_ptr<Animator> GameObject::GetAnimator()
-//{
-//	shared_ptr<Component> component = GetFixedComponent(ComponentType::Animator);
-//
-//	return static_pointer_cast<Animator>(component);
-//}
+shared_ptr<ModelRenderer> GameObject::GetModelRenderer()
+{
+	shared_ptr<Component> component = GetFixedComponent(ComponentType::ModelRenderer);
+
+	return static_pointer_cast<ModelRenderer>(component);
+}
+
+shared_ptr<ModelAnimator> GameObject::GetModelAnimator()
+{
+	shared_ptr<Component> component = GetFixedComponent(ComponentType::ModelAnimator);
+
+	return static_pointer_cast<ModelAnimator>(component);
+}
+
+shared_ptr<Light> GameObject::GetLight()
+{
+	shared_ptr<Component> component = GetFixedComponent(ComponentType::Light);
+
+	return static_pointer_cast<Light>(component);
+}
+
+shared_ptr<BaseCollider> GameObject::GetCollider()
+{
+	shared_ptr<Component> component = GetFixedComponent(ComponentType::Collider);
+
+	return static_pointer_cast<BaseCollider>(component);
+}
+
+shared_ptr<Terrain> GameObject::GetTerrain()
+{
+	shared_ptr<Component> component = GetFixedComponent(ComponentType::Terrain);
+
+	return static_pointer_cast<Terrain>(component);
+}
 
 shared_ptr<Transform> GameObject::GetOrAddTransform()
 {
